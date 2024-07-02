@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect } from 'react'
 import {
   GoogleSignin,
@@ -15,10 +15,9 @@ const Login = ({ navigation }) => {
 
   const configure=async()=>{
     await GoogleSignin.configure();
-
-    // {
-    //   webClientId: "414166768075-7n45atkptauhchgnpt5ndoj959rp8t8n.apps.googleusercontent.com",
-    // }
+// {
+//         webClientId: "414166768075-7n45atkptauhchgnpt5ndoj959rp8t8n.apps.googleusercontent.com",
+//       }
   }
   useEffect(() => {
     configure() 
@@ -36,7 +35,6 @@ const Login = ({ navigation }) => {
       //   routes: [{ name: 'Product List' }],
       // });
     } catch (error) {
-
       console.log("GETTING ERROR FROM GOOGLE SIGN IN", error)
 
     }

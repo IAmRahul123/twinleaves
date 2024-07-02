@@ -14,8 +14,13 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+# Add use_modular_headers! here to apply globally
+use_modular_headers!
+
 target 'twinleaves' do
   config = use_native_modules!
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
 
   use_react_native!(
     :path => config[:reactNativePath],
@@ -23,9 +28,16 @@ target 'twinleaves' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  # Example for Firebase dependencies with :modular_headers => true
+pod 'FirebaseCore', :modular_headers => true
+pod 'Firebase', :modular_headers => true
+pod 'FirebaseCoreInternal', :modular_headers => true
+pod 'GoogleUtilities', :modular_headers => true
+
   target 'twinleavesTests' do
     inherit! :complete
     # Pods for testing
+    pod 'Firebase/Core'
   end
 
   post_install do |installer|
@@ -36,5 +48,16 @@ target 'twinleaves' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+
+    # Uncheck "Based on dependency analysis" for specific build phases
+    installer.pods_project.targets.each do |target|
+      target.build_phases.each do |build_phase|
+        if build_phase.respond_to?(:name)
+          if build_phase.name == '[CP-User] [RNFB] Core Configuration' || build_phase.name == 'Bundle React Native code and images'
+            build_phase.run_only_for_deployment_postprocessing = false
+          end
+        end
+      end
+    end
   end
 end

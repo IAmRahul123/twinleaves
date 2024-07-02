@@ -4,10 +4,13 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import IconMat from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useCart } from '../context/cartContext'
 import { useNavigation } from '@react-navigation/native'
+import { useCameraPermission } from 'react-native-vision-camera'
 
 const CartIcon = () => {
     const { cart } = useCart()
     const navigation = useNavigation()
+    const { hasPermission, requestPermission } = useCameraPermission()
+
     const [total, setTotal] = useState(0)
     const calculateItems = async () => {
         try {
@@ -28,9 +31,20 @@ const CartIcon = () => {
         calculateItems()
     }, [cart])
 
+    const navigateToBarcode=async()=>{
+        if (!hasPermission) {
+            let permission=await requestPermission()
+            if(permission){
+                navigation.navigate('Barcode')
+            }
+        }else{
+            navigation.navigate('Barcode')
+        }
+    }
+
     return (
         <View style={styles.container}>
-            <IconMat name={"barcode-scan"} size={30} color={"#000"} onPress={() => navigation.navigate('Barcode')}
+            <IconMat name={"barcode-scan"} size={30} color={"#000"} onPress={navigateToBarcode}
             />
             <Icon name={"shoppingcart"} size={30} color={"#000"} onPress={() => navigation.navigate('Cart')}
             />

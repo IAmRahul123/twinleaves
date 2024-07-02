@@ -2,21 +2,32 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { Camera, useCameraDevice, useCameraPermission, useCodeScanner } from 'react-native-vision-camera'
 import { useNavigation } from '@react-navigation/native'
+import { useCart } from '../context/cartContext'
 
 const Barcode = () => {
   const { hasPermission, requestPermission } = useCameraPermission()
-  const navigation=useNavigation()
+  const navigation = useNavigation()
+
+  const { products } = useCart()
+
   useEffect(() => {
-    if(!hasPermission){
+    if (!hasPermission) {
       requestPermission()
     }
   }, [])
-  
+
 
   const codeScanner = useCodeScanner({
-    codeTypes: ['ean-13','ean-8','upc-a','upc-e'],
+    codeTypes: ['ean-13', 'ean-8', 'upc-a', 'upc-e'],
     onCodeScanned: (codes) => {
-      if(codes[0]?.value){
+      // "gtin": "8906161670378",
+
+      if (codes[0]?.value) {
+        let result=products?.find((item) => item?.gtin == codes[0]?.value)
+
+        if(result){
+          navigation.navigate("Product Details",result)
+        }
         // navigation.navigate("Product Details")
       }
       console.log(codes[0]?.value)
