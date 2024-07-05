@@ -1,7 +1,14 @@
 apply plugin: "com.android.application"
+
+project.ext.envConfigFiles = [
+dev: ".env.dev",
+staging: ".env.staging",
+prod: ".env.prod",
+]
+// apply plugin: 'com.google.gms.google-services'
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
-apply plugin: 'com.google.gms.google-services'
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -107,6 +114,33 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId 'com.twinleaves.dev'
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue 'string', 'app_name', 'Twinleaves Dev'
+            resValue "string", "build_config_package", "com.twinleaves"
+        }
+
+        staging {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId 'com.twinleaves.staging'
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "app_name", "Twinleaves Staging"
+            resValue "string", "build_config_package", "com.twinleaves"
+        }
+
+        prod {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId 'com.twinleaves'
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "app_name", "Twinleaves"
+            resValue "string", "build_config_package", "com.twinleaves"
         }
     }
 }

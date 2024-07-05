@@ -8,26 +8,23 @@ import {
 import auth from '@react-native-firebase/auth';
 import { useLogin } from '../context/loginContext';
 import { CommonActions } from '@react-navigation/native';
+import Config from 'react-native-config'
 
 const Login = ({ navigation }) => {
   const { login } = useLogin();
 
-
-  const configure=async()=>{
+  const configure = async () => {
     await GoogleSignin.configure();
-// {
-//         webClientId: "414166768075-7n45atkptauhchgnpt5ndoj959rp8t8n.apps.googleusercontent.com",
-//       }
   }
   useEffect(() => {
-    configure() 
+    configure()
   }, [])
 
 
   const authenticate = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const {user} = await GoogleSignin.signIn();
+      const { user } = await GoogleSignin.signIn();
       await login(user.id)
       // navigation.navigate("Product List")
       // navigation.reset({
@@ -39,8 +36,11 @@ const Login = ({ navigation }) => {
 
     }
   };
+
+  console.log("ConfigConfig",Config)
   return (
     <View style={styles.container}>
+      <Text>{Config?.NODE_ENV}</Text>
       <TouchableOpacity onPress={authenticate} style={styles.btn}>
         <Image source={require('../assets/google-logo.png')} style={{}} resizeMode='contain' style={{ height: 25, width: 25 }} />
         <Text style={styles.text}>Sign In With Google</Text>
