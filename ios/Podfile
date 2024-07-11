@@ -17,7 +17,7 @@ end
 # Add use_modular_headers! here to apply globally
 use_modular_headers!
 
-target 'twinleaves' do
+abstract_target 'twinleaves_CommonPods' do
   config = use_native_modules!
   use_frameworks! :linkage => :static
   $RNFirebaseAsStaticFramework = true
@@ -33,11 +33,18 @@ pod 'FirebaseCore', :modular_headers => true
 pod 'Firebase', :modular_headers => true
 pod 'FirebaseCoreInternal', :modular_headers => true
 pod 'GoogleUtilities', :modular_headers => true
+ pod 'Firebase/Core'
+
+  target 'twinleaves_dev' do
+  end
+  target 'twinleaves_prod' do
+  end
+  target 'twinleaves_uat' do
+  end
 
   target 'twinleavesTests' do
     inherit! :complete
     # Pods for testing
-    pod 'Firebase/Core'
   end
 
   post_install do |installer|
