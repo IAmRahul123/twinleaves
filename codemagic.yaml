@@ -60,8 +60,8 @@ workflows:
       triggering:
         events:
           - push
-          - tag
-          - pull_request
+          # - tag
+          # - pull_request
         branch_patterns:
           - pattern: master
             include: true
