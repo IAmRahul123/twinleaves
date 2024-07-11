@@ -7,8 +7,8 @@ workflows:
     environment:
       groups:
         - keystore credentials 
-      android_signing:
-        - keystore_reference
+      # android_signing:
+      #   - keystore_reference
       vars:
         PACKAGE_NAME: "com.twinleaves"
       # triggering:
