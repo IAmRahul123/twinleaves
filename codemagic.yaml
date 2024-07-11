@@ -11,15 +11,15 @@ workflows:
         - keystore_reference
       vars:
         PACKAGE_NAME: "com.twinleaves"
-      triggering:
-        events:
-          - push
-          - tag
-          - pull_request
-        branch_patterns:
-          - pattern: master
-            include: true
-            source: true
+      # triggering:
+      #   events:
+      #     - push
+      #     - tag
+      #     - pull_request
+      #   branch_patterns:
+      #     - pattern: master
+      #       include: true
+      #       source: true
 
     scripts:
       - name: Install npm dependencies
