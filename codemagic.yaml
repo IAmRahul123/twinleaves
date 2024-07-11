@@ -32,7 +32,7 @@ workflows:
         script: | 
           cd android
           ./gradlew clean
-          ./gradlew bundleRelease
+          ./gradlew assembleRelease
 
     artifacts:
       - android/app/build/outputs/**/*.aab
