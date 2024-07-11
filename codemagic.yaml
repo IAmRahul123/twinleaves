@@ -32,7 +32,7 @@ workflows:
         script: | 
           cd android
           ./gradlew clean
-          ./gradlew assembleUatRelease
+          ./gradlew assembleStagingRelease
 
     artifacts:
       - android/app/build/outputs/**/*.apk
@@ -57,15 +57,15 @@ workflows:
       #   - keystore_reference
       vars:
         PACKAGE_NAME: "com.twinleaves.dev"
-      # triggering:
-      #   events:
-      #     - push
-      #     - tag
-      #     - pull_request
-      #   branch_patterns:
-      #     - pattern: master
-      #       include: true
-      #       source: true
+      triggering:
+        events:
+          - push
+          - tag
+          - pull_request
+        branch_patterns:
+          - pattern: master
+            include: true
+            source: true
 
     scripts:
       - name: Install npm dependencies

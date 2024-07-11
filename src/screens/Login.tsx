@@ -40,7 +40,7 @@ const Login = ({ navigation }) => {
   console.log("ConfigConfig",Config)
   return (
     <View style={styles.container}>
-      <Text>{Config?.NODE_ENV}</Text>
+      <Text style={{color:"#000"}}>{Config?.NODE_ENV}</Text>
       <TouchableOpacity onPress={authenticate} style={styles.btn}>
         <Image source={require('../assets/google-logo.png')} style={{}} resizeMode='contain' style={{ height: 25, width: 25 }} />
         <Text style={styles.text}>Sign In With Google</Text>
