@@ -60,12 +60,12 @@ workflows:
       triggering:
         events:
           - push
-          # - tag
-          # - pull_request
-        branch_patterns:
-          - pattern: master
-            include: true
-            source: true
+          - tag
+          - pull_request
+        # branch_patterns:
+        #   - pattern: master
+        #     include: true
+        #     source: true
 
     scripts:
       - name: Install npm dependencies
